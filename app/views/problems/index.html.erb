@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Get the steam out</h1>
+<div class="box panel panel-default">
+      <div class="panel-body">
+      <img src="http://3.bp.blogspot.com/-rqq9Gx-NOmg/T7Y79j_LFYI/AAAAAAAACDQ/C1FvXFwbbdg/s1600/Friustrated%2520man%2520steam%2520out%2520of%2520ears.jpeg"></img></div></div><br>
+
+<%= render 'form' %>
+
+<p>Other listed frustrations</p>
+
+
+<div id="problems" class="transitions-enabled">
+  <% @problems.each do |problem| %>
+    <div class="box panel panel-default">
+      <div class="panel-body">
+        <%= problem.description %><br>
+        <%#= problem.user.email if pin.user %>
+        <%= link_to 'Show', problem_path(problem) %>
+        <%# if problem.user == current_user %>
+          <%= link_to 'Edit', edit_problem_path(problem) %>
+          <%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%# end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<br>
+
+<%= link_to 'New Problem', new_problem_path %>
+
+<div class="center">
+   <%= will_paginate @pins, renderer: BootstrapPagination::Rails %>
+</div>
+
