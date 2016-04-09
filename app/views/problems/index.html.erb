@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%#p id="notice"><%= notice %></p>
 
 <h1>Get the steam out</h1>
 <div class="box panel panel-default">
@@ -14,9 +14,11 @@
   <% @problems.each do |problem| %>
     <div class="box panel panel-default">
       <div class="panel-body">
-        <%= problem.description %><br>
+        <%= link_to problem.description, problem %><br>
+        <%= "votes:"%> <%= problem.likes %><br>
+        <%= link_to '+', problem, method: :liking %>
         <%#= problem.user.email if pin.user %>
-        <%= link_to 'Show', problem_path(problem) %>
+        
         <%# if problem.user == current_user %>
           <%= link_to 'Edit', edit_problem_path(problem) %>
           <%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -32,6 +34,6 @@
 <%= link_to 'New Problem', new_problem_path %>
 
 <div class="center">
-   <%= will_paginate @pins, renderer: BootstrapPagination::Rails %>
+   <%= will_paginate @problems, renderer: BootstrapPagination::Rails %>
 </div>
 

@@ -1,5 +1,5 @@
 class ProblemsController < ApplicationController
-  before_action :set_problem, only: [:show, :edit, :update, :destroy]
+  before_action :set_problem, only: [:show, :edit, :update, :destroy, :liking]
 
   # GET /problems
   # GET /problems.json
@@ -29,7 +29,7 @@ class ProblemsController < ApplicationController
 
     respond_to do |format|
       if @problem.save
-        format.html { redirect_to @problem, notice: 'Problem was successfully created.' }
+        format.html { redirect_to problems_url, success: 'Problem was successfully created.' }
         format.json { render :show, status: :created, location: @problem }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ProblemsController < ApplicationController
   def update
     respond_to do |format|
       if @problem.update(problem_params)
-        format.html { redirect_to @problem, notice: 'Problem was successfully updated.' }
+        format.html { redirect_to @problem, success: 'Problem was successfully updated.' }
         format.json { render :show, status: :ok, location: @problem }
       else
         format.html { render :edit }
@@ -57,12 +57,25 @@ class ProblemsController < ApplicationController
   def destroy
     @problem.destroy
     respond_to do |format|
-      format.html { redirect_to problems_url, notice: 'Problem was successfully destroyed.' }
+      format.html { redirect_to problems_url, info: 'Problem was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  private
+def liking
+  set_problem
+  @problem.likes += 1 unless @problem.likes == 1
+  @problem.save
+  respond_to do |format|
+    format.html { redirect_to problems_url, info: 'You like it.' }
+    format.js 
+  end
+end
+
+private
+
+  
+
     # Use callbacks to share common setup or constraints between actions.
     def set_problem
       @problem = Problem.find(params[:id])
@@ -73,3 +86,13 @@ class ProblemsController < ApplicationController
       params.require(:problem).permit(:description)
     end
 end
+
+
+
+
+
+
+
+
+
+

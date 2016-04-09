@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408144658) do
+ActiveRecord::Schema.define(version: 20160409152650) do
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "value"
+    t.integer  "problem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["problem_id"], name: "index_likes_on_problem_id"
 
   create_table "problems", force: :cascade do |t|
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "likes"
   end
 
   create_table "users", force: :cascade do |t|
@@ -36,5 +46,14 @@ ActiveRecord::Schema.define(version: 20160408144658) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "value"
+    t.integer  "problem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "votes", ["problem_id"], name: "index_votes_on_problem_id"
 
 end
