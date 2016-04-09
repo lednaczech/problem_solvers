@@ -1,13 +1,19 @@
 <%#p id="notice"><%= notice %></p>
+<div class="jumbotron">
+<table>
+<thead><h1 align="center">Let off steam</h1></thead>
+<tbody>
+<tr>
+<td>
 
-<h1>Get the steam out</h1>
 <div class="box panel panel-default">
       <div class="panel-body">
-      <img src="http://3.bp.blogspot.com/-rqq9Gx-NOmg/T7Y79j_LFYI/AAAAAAAACDQ/C1FvXFwbbdg/s1600/Friustrated%2520man%2520steam%2520out%2520of%2520ears.jpeg"></img></div></div><br>
+      <img src="http://3.bp.blogspot.com/-rqq9Gx-NOmg/T7Y79j_LFYI/AAAAAAAACDQ/C1FvXFwbbdg/s1600/Friustrated%2520man%2520steam%2520out%2520of%2520ears.jpeg"></img></div></div></td><td>
 
+<h3>Thing that really frustrates me</h3>
 <%= render 'form' %>
-
-<p>Other listed frustrations</p>
+</td></tr></tbody></table></div>
+<h3>Listed frustrations</h3>
 
 
 <div id="problems" class="transitions-enabled">
@@ -15,11 +21,13 @@
     <div class="box panel panel-default">
       <div class="panel-body">
         <%= link_to problem.description, problem %><br>
-        <%= "votes:"%> <%= problem.likes %><br>
-        <%= link_to '+', problem, method: :liking %>
+        <%= "Likes:"%> <%= problem.likes %>
+        <%= link_to liking_problem_path(problem) do %>
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+        <% end %>
         <%#= problem.user.email if pin.user %>
         
-        <%# if problem.user == current_user %>
+        <%# if problem.user == current_user %><br>
           <%= link_to 'Edit', edit_problem_path(problem) %>
           <%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' } %>
         <%# end %>
@@ -30,8 +38,6 @@
 
 
 <br>
-
-<%= link_to 'New Problem', new_problem_path %>
 
 <div class="center">
    <%= will_paginate @problems, renderer: BootstrapPagination::Rails %>

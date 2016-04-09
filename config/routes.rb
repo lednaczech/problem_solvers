@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :problems
+  resources :problems do
+    member do
+        get 'liking'
+    end
+  end
+
   devise_for :users
   root "problems#index"
   get "about" => "pages#about"

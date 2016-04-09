@@ -26,10 +26,10 @@ class ProblemsController < ApplicationController
   # POST /problems.json
   def create
     @problem = Problem.new(problem_params)
-
+    @problem.likes = 0
     respond_to do |format|
       if @problem.save
-        format.html { redirect_to problems_url, success: 'Problem was successfully created.' }
+        format.html { redirect_to problems_url, success: 'Frustration was successfully created.' }
         format.json { render :show, status: :created, location: @problem }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ProblemsController < ApplicationController
   def update
     respond_to do |format|
       if @problem.update(problem_params)
-        format.html { redirect_to @problem, success: 'Problem was successfully updated.' }
+        format.html { redirect_to @problem, success: 'Frustration was successfully updated.' }
         format.json { render :show, status: :ok, location: @problem }
       else
         format.html { render :edit }
@@ -57,17 +57,19 @@ class ProblemsController < ApplicationController
   def destroy
     @problem.destroy
     respond_to do |format|
-      format.html { redirect_to problems_url, info: 'Problem was successfully destroyed.' }
+      format.html { redirect_to problems_url, info: 'Frustration was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
 def liking
-  set_problem
-  @problem.likes += 1 unless @problem.likes == 1
+  if (@problem.likes == nil)
+     @problem.likes = 0
+   end
+  @problem.likes += 1
   @problem.save
   respond_to do |format|
-    format.html { redirect_to problems_url, info: 'You like it.' }
+    format.html { redirect_to problems_url }
     format.js 
   end
 end
